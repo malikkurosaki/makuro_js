@@ -15,7 +15,7 @@ function Drawer(param){
                 </button>
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
-                        <div class="d-flex flex-row-reverse bg-primary">
+                        <div class="d-flex flex-row-reverse col">
                             <div></div>
                             <button type="button" class="btn-close text-reset " data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>

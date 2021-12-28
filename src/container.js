@@ -7,7 +7,7 @@ const $ = require('jquery');
  * @param {Object} param
  * @param {Widget} param.child 
  * @param {Padding} param.padding
- * @returns 
+ * @returns {Container}
  */
 function Container(param){
     
