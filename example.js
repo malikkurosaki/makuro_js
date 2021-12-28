@@ -6,6 +6,7 @@ const Scaffold = require("./src/scaffold");
 const Table = require("./src/table");
 const Text = require("./src/text");
 
+
 App({
     home: Scaffold({
         appBar: AppBar({
