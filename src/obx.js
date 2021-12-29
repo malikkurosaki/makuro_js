@@ -7,14 +7,12 @@ const $ = require('jquery');
  * @returns {Obx}
  */
  function Obx(param) {
-    let key = param.state.key;
-
-    let el = document.createElement('div');
+    let el = $("<div></div>");
     if (param && param.builder) el.append(param.builder());
     if (param && param.state) {
-        
+        let key = param.state.key;
        $(document).on(key, function(){
-           el.children[0].replaceWith(param.builder())
+            $(el[0].children).replaceWith(param.builder())
        })
     }
     return el;

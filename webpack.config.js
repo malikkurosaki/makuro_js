@@ -1,6 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const { GenerateSW } = require('workbox-webpack-plugin');
 
 /**
  * @type {import('webpack').Configuration}
@@ -52,6 +51,5 @@ module.exports = {
             "window.jQuery": "jquery'",
             "window.$": "jquery"
         }),
-        //new GenerateSW()
     ],
 };

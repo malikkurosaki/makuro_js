@@ -10,26 +10,58 @@
 const { App, TabbarView, TextButton } = __webpack_require__(/*! . */ "./index.js");
 const AppBar = __webpack_require__(/*! ./src/app_bar */ "./src/app_bar.js");
 const Column = __webpack_require__(/*! ./src/column */ "./src/column.js");
+const Container = __webpack_require__(/*! ./src/container */ "./src/container.js");
 const Drawer = __webpack_require__(/*! ./src/drawer */ "./src/drawer.js");
+const IndexStack = __webpack_require__(/*! ./src/index_stack */ "./src/index_stack.js");
+const Obs = __webpack_require__(/*! ./src/obs */ "./src/obs.js");
+const Obx = __webpack_require__(/*! ./src/obx */ "./src/obx.js");
 const Scaffold = __webpack_require__(/*! ./src/scaffold */ "./src/scaffold.js");
 const Table = __webpack_require__(/*! ./src/table */ "./src/table.js");
 const Text = __webpack_require__(/*! ./src/text */ "./src/text.js");
+
+var drawerClose;
+
+const idx = Obs(0);
 
 App({
     home: Scaffold({
         appBar: AppBar({
             title: Text("Ini Adalah Judulnya")
         }),
-        drawer: Drawer(),
+        drawer: Drawer({
+            close: (close) => drawerClose = close,
+            drawerHeader: TextButton({
+                text: "apa",
+                onClick: () => {
+                    
+                    drawerClose()
+                }
+            })
+        }),
         body: Column({
             children: [
-                Text("ini ada dimana"),
-                Text("ini ada dimana"),
-                Text("ini ada dimana"),
-                Text("ini ada dimana"),
-                Text("ini ada dimana"),
-                Text("ini ada dimana")
-
+                Container({
+                    child: TextButton({
+                        text: "1",
+                        onClick: () => {
+                            idx.value = 2;
+    
+                            console.log("ditekn")
+                        }
+                    })
+                }),
+                Obx({
+                    state: idx,
+                    builder: () => 
+                    IndexStack({
+                        index: idx.value,
+                        children: [
+                            Text("ini addalah text pertamanya 0 "),
+                            Text("ini adalah text keduanya 1 "),
+                            Text("ini adalah text ketiganya 2 ")
+                        ]
+                    })
+                })
             ]
         })
     })
@@ -47,8 +79,6 @@ module.exports = {
   \******************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-// eslint-disable-next-line no-unused-vars
-const $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 __webpack_require__(/*! bootstrap/dist/js/bootstrap.bundle.min */ "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js")
 __webpack_require__(/*! ./node_modules/tabulator-tables/src/scss/tabulator.scss */ "./node_modules/tabulator-tables/src/scss/tabulator.scss");
 __webpack_require__(/*! ./node_modules/bootstrap/scss/bootstrap.scss */ "./node_modules/bootstrap/scss/bootstrap.scss");
@@ -56,18 +86,23 @@ __webpack_require__(/*! bootstrap/js/dist/popover */ "./node_modules/bootstrap/j
 
 
 module.exports = {
+    AppBar: __webpack_require__(/*! ./src/app_bar */ "./src/app_bar.js"),
     App : __webpack_require__(/*! ./src/app */ "./src/app.js"),
-    TextButton : __webpack_require__(/*! ./src/text_button */ "./src/text_button.js"),
     ButtonDialog : __webpack_require__(/*! ./src/button_dialog */ "./src/button_dialog.js"),
+    Column: __webpack_require__(/*! ./src/column */ "./src/column.js"),
     Container : __webpack_require__(/*! ./src/container */ "./src/container.js"),
-    Obx : __webpack_require__(/*! ./src/obx */ "./src/obx.js"),
+    Drawer: __webpack_require__(/*! ./src/drawer */ "./src/drawer.js"),
     Obs : __webpack_require__(/*! ./src/obs */ "./src/obs.js"),
+    Obx : __webpack_require__(/*! ./src/obx */ "./src/obx.js"),
+    Scaffold: __webpack_require__(/*! ./src/scaffold */ "./src/scaffold.js"),
     TabbarView : __webpack_require__(/*! ./src/tabbar_view */ "./src/tabbar_view.js"),
     Table : __webpack_require__(/*! ./src/table */ "./src/table.js"),
+    TextButton : __webpack_require__(/*! ./src/text_button */ "./src/text_button.js"),
     TextFormField : __webpack_require__(/*! ./src/text_form_field */ "./src/text_form_field.js"),
-    Widget : __webpack_require__(/*! ./src/widget */ "./src/widget.js"),
     Text: __webpack_require__(/*! ./src/text */ "./src/text.js"),
-    Scaffold: __webpack_require__(/*! ./src/scaffold */ "./src/scaffold.js")
+    Widget : __webpack_require__(/*! ./src/widget */ "./src/widget.js"),
+    IndexStack: __webpack_require__(/*! ./src/index_stack */ "./src/index_stack.js")
+
 }
 
 
@@ -40605,7 +40640,7 @@ const $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.j
  * @param {Object} param
  * @param {Widget} param.child 
  * @param {Padding} param.padding
- * @returns 
+ * @returns {Container}
  */
 function Container(param){
     
@@ -40639,22 +40674,36 @@ module.exports = Container
  * @param {Object} param 
  * @param {HTMLElement} param.drawerHeader
  * @param {HTMLElement} param.drawerBody
+ * @param {() => void} param.close
  * @returns {HTMLElement}
+ * @example
+ * ```
+ * // untuk close drawer manual
+ * var closeDrawer;
+ * 
+ * Drawer({
+ *      close: (close) => closeDrawer = close,
+ *      drawerHeader: ...,
+ *      drawerBody: ...,
+ * })
+ * 
+ * ```
  */
 function Drawer(param){
     let el = $(
         `
             <div>
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <div class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </div>
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
-                        <div class="d-flex flex-row-reverse bg-primary">
+                        <div class="d-flex flex-row-reverse col">
                             <div></div>
-                            <button type="button" class="btn-close text-reset " data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                            <div type="button" class="btn-close text-reset " data-bs-dismiss="offcanvas" aria-label="Close"></div>
                         </div>
                     </div>
+                    <div class="drawerHead"></div>
                     <div class="offcanvas-body"></div>
                 </div>
             </div>
@@ -40662,17 +40711,64 @@ function Drawer(param){
     );
 
     if(param && param.drawerHeader){
-        $(el[0].getElementsByClassName("offcanvas-header")).append(param.drawerHeader);
+        $(el[0].getElementsByClassName("drawerHead")).append(param.drawerHeader);
     }
 
     if(param && param.drawerBody){
         $(el[0].getElementsByClassName("offcanvas-body")).append(param.drawerBody);
     }
 
+    if(param && param.close){
+
+        function tutup(){
+            console.log("diditutup");
+            $(el[0].getElementsByClassName("btn-close text-reset")).trigger('click');
+        }
+        param.close(tutup)
+    }
+
     return el;
 }
 
 module.exports = Drawer
+
+/***/ }),
+
+/***/ "./src/index_stack.js":
+/*!****************************!*\
+  !*** ./src/index_stack.js ***!
+  \****************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+
+/**
+ * 
+ * @param {Object} param 
+ * @param {Number} param.index
+ * @param {HTMLElement[]} param.children
+ */
+function IndexStack(param){
+    let el = $("<div></div>");
+    if(param && param.children){
+        param.children.forEach((elem) => {
+            $(elem).addClass('indexStackItem');
+            $(el).append($(elem))
+        });
+
+        if(param.index != null){
+            
+            $(el[0].getElementsByClassName("indexStackItem")).hide();
+            $(el[0].getElementsByClassName('indexStackItem')[param.index]).show()
+        }
+    }
+
+    return param? el: "IndexStack(?)"
+
+}   
+
+module.exports = IndexStack
 
 /***/ }),
 
@@ -40724,14 +40820,12 @@ const $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.j
  * @returns {Obx}
  */
  function Obx(param) {
-    let key = param.state.key;
-
-    let el = document.createElement('div');
+    let el = $("<div></div>");
     if (param && param.builder) el.append(param.builder());
     if (param && param.state) {
-        
+        let key = param.state.key;
        $(document).on(key, function(){
-           el.children[0].replaceWith(param.builder())
+            $(el[0].children).replaceWith(param.builder())
        })
     }
     return el;
@@ -41290,6 +41384,7 @@ var __webpack_exports__ = {};
 /*!*****************!*\
   !*** ./main.js ***!
   \*****************/
+const $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 const { Example } = __webpack_require__(/*! ./example */ "./example.js");
 
 })();

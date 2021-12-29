@@ -20,7 +20,7 @@ module.exports = {
     TextFormField : require("./src/text_form_field"),
     Text: require('./src/text'),
     Widget : require("./src/widget"),
+    IndexStack: require('./src/index_stack')
 
 }
-
 
