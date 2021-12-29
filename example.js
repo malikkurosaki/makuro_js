@@ -31,6 +31,10 @@ App({
         }),
         body: Column({
             children: [
+                Table({
+                    ajaxURL: 'https://jsonplaceholder.typicode.com/posts',
+                    autoColumns: true
+                }),
                 Container({
                     child: TextButton({
                         text: "1",

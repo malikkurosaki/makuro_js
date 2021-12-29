@@ -40,6 +40,10 @@ App({
         }),
         body: Column({
             children: [
+                Table({
+                    ajaxURL: 'https://jsonplaceholder.typicode.com/posts',
+                    autoColumns: true
+                }),
                 Container({
                     child: TextButton({
                         text: "1",
@@ -40858,14 +40862,17 @@ function Scaffold(param){
         `
             <div>
                 <div class="appbar"></div>
-                <div class="body"></div>
+                <div class="mt-5">
+                    <div style="height: 1px"></div>
+                    <div class="body mt-3"></div>
+                </div>
             </div>
         `
     );
 
     if(param && param.appBar){
         $(el[0].getElementsByClassName("appbar")).append(param.appBar);
-        $(el[0].getElementsByClassName("body")).addClass('mt-5')
+        // $(el[0].getElementsByClassName("body")).addClass('mt-5')
     }
 
     if(param && param.drawer && param.appBar){
@@ -40963,17 +40970,21 @@ const {TabulatorFull, Tabulator} = __webpack_require__(/*! tabulator-tables */ "
 
 /**
  * 
- * @param {Tabulator.Options} param 
- * @returns Table
+ * @param {Tabulator.Options} param
+ * @param {(tabulator: Tabulator) => void} tabulator
+ * @returns {Table}
  */
-function Table(param){
+function Table(param, tabulator){
 
     let con = document.createElement('div');
 
     let tab = new TabulatorFull(con, param);
     con.append(tab);
 
-
+    if(tabulator){
+        tabulator(tab);
+    }
+    
     return param? con: "isiskan parameternya";
 }
 

@@ -1,8 +1,10 @@
 #!/bin/bash
+echo "PILIH MENU :"
+echo "------------"
 PS3="Pilih Menunya : "
 JAM=`date +"%d-%m-%Y %T"`
 
-select opt in "push git" subtract multiply divide quit; do
+select opt in "push git" "jalankan server" "jam" "keluar"; do
 
   case $opt in
     "push git")
@@ -12,25 +14,16 @@ select opt in "push git" subtract multiply divide quit; do
         echo "---------------"
         echo "     BERES     "
         echo "---------------"
-      ;;
-    subtract)
-      read -p "Enter the first number: " n1
-      read -p "Enter the second number: " n2
-      echo "$n1 - $n2 = $(($n1-$n2))"
-      ;;
-    multiply)
-      read -p "Enter the first number: " n1
-      read -p "Enter the second number: " n2
-      echo "$n1 * $n2 = $(($n1*$n2))"
-      ;;
-    divide)
-      read -p "Enter the first number: " n1
-      read -p "Enter the second number: " n2
-      echo "$n1 / $n2 = $(($n1/$n2))"
-      ;;
-    quit)
-      break
-      ;;
+    ;;
+    "jalankan server")
+        npm run dev
+    ;;
+    "jam")
+        echo ${JAM}
+    ;;
+    "keluar")
+        break
+     ;;
     *) 
       echo "Invalid option $REPLY"
       ;;

@@ -13,14 +13,17 @@ function Scaffold(param){
         `
             <div>
                 <div class="appbar"></div>
-                <div class="body"></div>
+                <div class="mt-5">
+                    <div style="height: 1px"></div>
+                    <div class="body mt-3"></div>
+                </div>
             </div>
         `
     );
 
     if(param && param.appBar){
         $(el[0].getElementsByClassName("appbar")).append(param.appBar);
-        $(el[0].getElementsByClassName("body")).addClass('mt-5')
+        // $(el[0].getElementsByClassName("body")).addClass('mt-5')
     }
 
     if(param && param.drawer && param.appBar){
