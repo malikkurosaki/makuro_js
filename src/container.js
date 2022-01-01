@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 const Widget = require("./widget");
-const $ = require('jquery');
 
 /**
  * 

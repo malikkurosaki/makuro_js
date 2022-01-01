@@ -1,32 +1,19 @@
 #!/bin/bash
-echo "PILIH MENU :"
-echo "------------"
-PS3="Pilih Menunya : "
-JAM=`date +"%d-%m-%Y %T"`
+menu="
+PILIHAN MENU :
+1. run server
+"
+echo "${menu}"
+echo -n "Masukkan Pilihannya: "
 
-select opt in "push git" "jalankan server" "jam" "keluar"; do
-
-  case $opt in
-    "push git")
-        git add .
-        git commit -m "makuro ${JAM}"
-        git push origin main
-        echo "---------------"
-        echo "     BERES     "
-        echo "---------------"
-    ;;
-    "jalankan server")
-        npm run dev
-    ;;
-    "jam")
-        echo ${JAM}
-    ;;
-    "keluar")
-        break
-     ;;
-    *) 
-      echo "Invalid option $REPLY"
-      ;;
-  esac
+while :
+do
+read choice
+case $choice in
+  1)  echo "mulain menjalankan server"
+      npm run dev
+  ;;
+  *)  echo "hemmm , lihat pilihan di menunya"
+esac
+  echo -n "Masukkan Pilihannya: "
 done
-
